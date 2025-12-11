@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Normativas | Proyecto Roleplay</title>
+
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #05070b;
+      --bg-soft: #0b1018;
+      --accent1: #885dfc;
+      --accent2: #5edbe7;
+      --accent-gradient: linear-gradient(90deg, #885dfc 0%, #5edbe7 100%);
+      --border-soft: rgba(255,255,255,0.1);
+      --text-main: #f7f9fc;
+      --text-muted: #9aa0b5;
+      --radius-xl: 24px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, sans-serif;
+      background: radial-gradient(circle at top, #101729 0, #05070b 55%);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      align-items: stretch;
+    }
+
+    .app-shell {
+      width: 100%;
+      max-width: 1100px;
+      min-height: 100vh;
+      padding: 24px 18px 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .brand-logo {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: var(--accent-gradient);
+      display: grid;
+      place-items: center;
+      box-shadow: 0 0 26px rgba(0,0,0,.7);
+      flex-shrink: 0;
+    }
+
+    .brand-logo span {
+      font-weight: 800;
+      font-size: 20px;
+      color: #05070b;
+    }
+
+    .brand-text h1 {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.03em;
+    }
+
+    .brand-text p {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .chip {
+      padding: 6px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--border-soft);
+      background: rgba(5, 10, 20, 0.8);
+      font-size: 11px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      color: var(--text-muted);
+    }
+
+    .chip-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #41f39e;
+      box-shadow: 0 0 6px #41f39e;
+    }
+
+    main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      min-height: 0;
+    }
+
+    .card {
+      background: linear-gradient(145deg, rgba(10,15,25,0.96), rgba(7,11,18,0.96));
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(255,255,255,0.06);
+      box-shadow:
+        0 22px 45px rgba(0,0,0,0.85),
+        0 0 0 1px rgba(255,255,255,0.02);
+      padding: 18px 18px 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      min-height: 0;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .card-header-title {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .card-header-title h2 {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .card-header-title p {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .badge {
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(13,20,35,0.9);
+      border: 1px solid rgba(255,255,255,0.06);
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* Lista de normativas */
+
+    .normas-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 14px;
+      margin-top: 4px;
+      overflow: auto;
+      padding-right: 4px;
+    }
+
+    .norma-card {
+      position: relative;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.08);
+      overflow: hidden;
+      cursor: pointer;
+      background: #05070b;
+      transition: transform .14s ease, box-shadow .14s ease, border-color .14s ease;
+    }
+
+    .norma-card img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      pointer-events: none;
+    }
+
+    .norma-card::after {
+      content: "Abrir normativa";
+      position: absolute;
+      left: 12px;
+      bottom: 10px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(0,0,0,0.65);
+      border: 1px solid rgba(255,255,255,0.35);
+      font-size: 11px;
+      color: #e9eef3;
+      backdrop-filter: blur(6px);
+    }
+
+    .norma-card:hover {
+      transform: translateY(-2px);
+      border-color: rgba(94,219,231,0.9);
+      box-shadow:
+        0 0 0 1px rgba(94,219,231,0.55),
+        0 18px 30px rgba(0,0,0,0.9);
+    }
+
+    /* Vista flipbook */
+
+    .viewer-shell {
+      display: none;
+      flex-direction: column;
+      gap: 12px;
+      height: 100%;
+      min-height: 0;
+    }
+
+    .viewer-shell.active {
+      display: flex;
+    }
+
+    .viewer-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .viewer-title-block {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      max-width: 70%;
+    }
+
+    .viewer-title-block h2 {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .viewer-title-block p {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .viewer-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-subtle {
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.14);
+      font-size: 12px;
+      color: var(--text-muted);
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background .12s ease, transform .12s ease;
+    }
+
+    .btn-subtle:hover {
+      background: rgba(255,255,255,0.06);
+      transform: translateY(-1px);
+    }
+
+    .viewer-frame-wrap {
+      position: relative;
+      border-radius: 20px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: radial-gradient(circle at top, rgba(136,93,252,0.18), rgba(5,7,13,0.98));
+      overflow: hidden;
+      flex: 1;
+      min-height: 260px;
+    }
+
+    .viewer-frame {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .viewer-hint {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 11px;
+      color: rgba(233, 238, 243, 0.9);
+      background: rgba(0, 0, 0, 0.55);
+      border-radius: 999px;
+      padding: 4px 10px;
+      border: 1px solid rgba(255,255,255,0.15);
+      backdrop-filter: blur(6px);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      pointer-events: none;
+    }
+
+    .viewer-hint kbd {
+      font-family: inherit;
+      font-size: 10px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      border: 1px solid rgba(255,255,255,0.3);
+      background: rgba(0,0,0,0.6);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    @media (max-width: 768px) {
+      .app-shell {
+        padding: 16px 12px 14px;
+      }
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .viewer-title-block {
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app-shell">
+    <header>
+      <div class="brand">
+        <div class="brand-logo">
+          <span>PR</span>
+        </div>
+        <div class="brand-text">
+          <h1>Normativas · Proyecto Roleplay</h1>
+          <p>Selecciona la normativa que quieras consultar.</p>
+        </div>
+      </div>
+
+      <div class="chip">
+        <span class="chip-dot"></span>
+        <span>Haz clic en cualquier tarjeta para abrir el flipbook</span>
+      </div>
+    </header>
+
+    <main>
+      <!-- Portada -->
+      <section class="card" id="homeCard">
+        <div class="card-header">
+          <div class="card-header-title">
+            <h2>Listado de normativas</h2>
+            <p>Todas las normativas oficiales agrupadas en un solo sitio.</p>
+          </div>
+          <span class="badge" id="badgeCount"></span>
+        </div>
+
+        <div class="normas-grid" id="normasGrid"></div>
+      </section>
+
+      <!-- Visor -->
+      <section class="card viewer-shell" id="viewerShell">
+        <div class="viewer-header">
+          <div class="viewer-title-block">
+            <h2 id="viewerTitle">Normativa</h2>
+            <p id="viewerDescription">Descripción de la normativa.</p>
+          </div>
+          <div class="viewer-actions">
+            <button class="btn-subtle" id="btnBack">
+              ← Volver al listado
+            </button>
+          </div>
+        </div>
+
+        <div class="viewer-frame-wrap">
+          <iframe
+            id="viewerFrame"
+            class="viewer-frame"
+            src="about:blank"
+            allowfullscreen
+          ></iframe>
+          <div class="viewer-hint">
+            <span>El visor permite zoom, navegación y modo completo.</span>
+            <kbd>F</kbd>
+            <span>pantalla completa</span>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    // Configuración de todas las normativas
+    const RULEBOOKS = [
+      {
+        id: 'general',
+        name: 'Normativa General',
+        description: 'Reglas básicas y comportamiento general en Proyecto Roleplay.',
+        image: 'assets/normativas/normativa-general.png',
+        flipbookUrl: 'flipbooks/general.html'
+      },
+      {
+        id: 'leo',
+        name: 'L.E.O',
+        description: 'Law Enforcement Officer – protocolos de policía.',
+        image: 'assets/normativas/normativa-leo.png',
+        flipbookUrl: 'flipbooks/leo.html'
+      },
+      {
+        id: 'ems',
+        name: 'E.M.S',
+        description: 'Emergency Medical Services – normativa del servicio médico.',
+        image: 'assets/normativas/normativa-ems.png',
+        flipbookUrl: 'flipbooks/ems.html'
+      },
+      {
+        id: 'comercios',
+        name: 'Comercios',
+        description: 'Normas específicas para negocios y comercios.',
+        image: 'assets/normativas/normativa-comercios.png',
+        flipbookUrl: 'flipbooks/comercios.html'
+      },
+      {
+        id: 'ilegales',
+        name: 'Ilegales',
+        description: 'Regulación de actividades e interpretación ilegal.',
+        image: 'assets/normativas/normativa-ilegales.png',
+        flipbookUrl: 'flipbooks/ilegales.html'
+      },
+      {
+        id: 'gobierno',
+        name: 'Gobierno',
+        description: 'Normativa y protocolos para cargos de gobierno.',
+        image: 'assets/normativas/normativa-gobierno.png',
+        flipbookUrl: 'flipbooks/gobierno.html'
+      },
+      {
+        id: 'streamers',
+        name: 'Streamers',
+        description: 'Guía y requisitos para creadores de contenido.',
+        image: 'assets/normativas/normativa-streamers.png',
+        flipbookUrl: 'flipbooks/streamers.html'
+      },
+      {
+        id: 'staff',
+        name: 'Staff',
+        description: 'Normativa interna del equipo de administración y staff.',
+        image: 'assets/normativas/normativa-staff.png',
+        flipbookUrl: 'flipbooks/staff.html'
+      },
+      {
+        id: 'playmakers',
+        name: 'Playmakers',
+        description: 'Pautas especiales para el rol de Playmaker.',
+        image: 'assets/normativas/normativa-playmakers.png',
+        flipbookUrl: 'flipbooks/playmakers.html'
+      }
+    ];
+
+    const normasGrid = document.getElementById('normasGrid');
+    const viewerShell = document.getElementById('viewerShell');
+    const homeCard = document.getElementById('homeCard');
+    const viewerTitle = document.getElementById('viewerTitle');
+    const viewerDescription = document.getElementById('viewerDescription');
+    const viewerFrame = document.getElementById('viewerFrame');
+    const btnBack = document.getElementById('btnBack');
+    const badgeCount = document.getElementById('badgeCount');
+
+    // Render tarjetas
+    function renderNormas() {
+      normasGrid.innerHTML = '';
+      RULEBOOKS.forEach(rule => {
+        const card = document.createElement('article');
+        card.className = 'norma-card';
+        card.dataset.id = rule.id;
+
+        const img = document.createElement('img');
+        img.src = rule.image;
+        img.alt = rule.name;
+        img.loading = 'lazy';
+
+        card.appendChild(img);
+        card.addEventListener('click', () => openRulebook(rule));
+        normasGrid.appendChild(card);
+      });
+
+      if (badgeCount) {
+        badgeCount.textContent = `${RULEBOOKS.length} normativas disponibles`;
+      }
+    }
+
+    function openRulebook(rule) {
+      viewerTitle.textContent = rule.name;
+      viewerDescription.textContent = rule.description || '';
+      viewerFrame.src = rule.flipbookUrl;
+
+      homeCard.classList.add('hidden');
+      viewerShell.classList.add('active');
+    }
+
+    function goBackHome() {
+      viewerFrame.src = 'about:blank';
+      viewerShell.classList.remove('active');
+      homeCard.classList.remove('hidden');
+    }
+
+    btnBack.addEventListener('click', goBackHome);
+
+    renderNormas();
+  </script>
+</body>
+</html>
